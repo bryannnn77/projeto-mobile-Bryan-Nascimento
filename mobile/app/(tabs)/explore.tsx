@@ -1,5 +1,4 @@
 import { StyleSheet, Image, Platform } from 'react-native';
-
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -13,14 +12,16 @@ export default function TabTwoScreen() {
       headerBackgroundColor={{ light: '#abb8c2', dark: '#353636' }}
       headerImage={
         <Image
-        source={require('@/assets/images/gow-Photoroom.png')}
-        style={styles.headerImage}
-      />
+          source={require('@/assets/images/simbolo azul-Photoroom.png')}
+          style={styles.headerImage}
+        />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText type="title">Sobre nós</ThemedText>
       </ThemedView>
+      
       <ThemedText>This app includes example code to help you get started.</ThemedText>
+      
       <Collapsible title="File-based routing">
         <ThemedText>
           This app has two screens:{' '}
@@ -35,12 +36,14 @@ export default function TabTwoScreen() {
           <ThemedText type="link">Learn more</ThemedText>
         </ExternalLink>
       </Collapsible>
+
       <Collapsible title="Android, iOS, and web support">
         <ThemedText>
           You can open this project on Android, iOS, and the web. To open the web version, press{' '}
           <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
         </ThemedText>
       </Collapsible>
+
       <Collapsible title="Images">
         <ThemedText>
           For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
@@ -52,6 +55,7 @@ export default function TabTwoScreen() {
           <ThemedText type="link">Learn more</ThemedText>
         </ExternalLink>
       </Collapsible>
+
       <Collapsible title="Custom fonts">
         <ThemedText>
           Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
@@ -63,6 +67,7 @@ export default function TabTwoScreen() {
           <ThemedText type="link">Learn more</ThemedText>
         </ExternalLink>
       </Collapsible>
+
       <Collapsible title="Light and dark mode components">
         <ThemedText>
           This template has light and dark mode support. The{' '}
@@ -73,6 +78,7 @@ export default function TabTwoScreen() {
           <ThemedText type="link">Learn more</ThemedText>
         </ExternalLink>
       </Collapsible>
+
       <Collapsible title="Animations">
         <ThemedText>
           This template includes an example of an animated component. The{' '}
@@ -95,10 +101,12 @@ export default function TabTwoScreen() {
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
+    height: 350,
+    width: 550,
+    bottom: -50,
+    left: -105,
     position: 'absolute',
+    resizeMode: 'contain',
   },
   titleContainer: {
     flexDirection: 'row',
