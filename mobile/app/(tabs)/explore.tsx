@@ -3,7 +3,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useState } from 'react';
-import { Button } from 'react-native-paper'; // Ou use o Button do React Native
+import { Button } from 'react-native-paper';
 
 export default function TabTwoScreen() {
   const [messages, setMessages] = useState([
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   messagesContainer: {
     flex: 1,
     marginBottom: 10,
-    maxHeight: 400, // Ajuste conforme necessário
+    maxHeight: 400,
   },  
   messageBubble: {
     padding: 12,
@@ -130,11 +130,11 @@ const styles = StyleSheet.create({
   },
   userBubble: {
     alignSelf: 'flex-end',
-    backgroundColor: '#DCF8C6', // Verde claro para mensagens do usuário
+    backgroundColor: '#DCF8C6',
   },
   botBubble: {
     alignSelf: 'flex-start',
-    backgroundColor: '#ECECEC', // Cinza para mensagens do bot
+    backgroundColor: '#ECECEC',
   },
   messageText: {
     fontSize: 16,

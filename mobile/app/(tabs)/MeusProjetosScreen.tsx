@@ -1,43 +1,81 @@
-// src/screens/MeusProjetosScreen.tsx
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Linking } from 'react-native';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
-// Tipagem para um projeto individual (opcional)
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-};
+const MeusProjetosScreen = () => {
+  const projectsData = [
+    {
+      id: '1',
+      title: 'Portfólio Pessoal',
+      description: 'Nessa área vamos ter o caminho para acessar os meus antigos projetos, como o Agrinho, Um projeto de um sistema de academia, entre outros',
+    },
+    {
+      id: '2',
+      title: 'App de Tarefas',
+      description: 'Aplicativo para gerenciamento diário.',
+    },
+  ];
 
-// Dados mockados (substitua por sua API/renderização dinâmica)
-const projectsData: Project[] = [
-  {
-    id: '1',
-    title: 'Site Pessoal',
-    description: 'Um portfolio desenvolvido com React e TypeScript.',
-  },
-  {
-    id: '2',
-    title: 'App de Tarefas',
-    description: 'Aplicativo para gerenciar tarefas diárias.',
-  },
-];
-
-const MeusProjetosScreen: React.FC = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {/* Título */}
       <Text style={styles.title}>Meus Projetos</Text>
-      
+
+      {/* Lista de Projetos */}
       {projectsData.map((project) => (
         <View key={project.id} style={styles.projectCard}>
           <Text style={styles.projectTitle}>{project.title}</Text>
           <Text style={styles.projectDescription}>{project.description}</Text>
         </View>
       ))}
+
+      {/* Seção do GitHub (em cima) */}
+      <View style={styles.linkSection}>
+        <Text style={styles.linkText}>
+          Para mais projetos, acesse:
+        </Text>
+        
+        <Text 
+          style={styles.link}
+          onPress={() => Linking.openURL('https://github.com/bryannnn77')}
+        >
+          <AntDesign name="github" size={20} color="#333" /> github.com/bryannnn77
+        </Text>
+      </View>
+
+      <Image
+        source={require('@/assets/images/github.png')}
+        style={styles.image}
+        resizeMode="contain"
+      />
+
+      {/* Divisor visual */}
+      <View style={styles.divider} />
+
+      {/* Seção do LinkedIn (embaixo) */}
+      <View style={styles.linkSection}>
+        <Text style={styles.linkText}>
+          Meu perfil profissional:
+        </Text>
+        
+        <Text 
+          style={styles.link}
+          onPress={() => Linking.openURL('https://br.linkedin.com/in/bryan-nascimento-436978271?trk=people-guest_people_search-card')}
+        >
+          <FontAwesome name="linkedin-square" size={20} color="#0077B5" /> linkedin.com/in/bryan-nascimento
+        </Text>
+      </View>
+
+      <Image
+        source={require('@/assets/images/linkedin.png')}
+        style={styles.image}
+        resizeMode="contain"
+      />
     </ScrollView>
   );
 };
 
+// Estilos
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -56,7 +94,6 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
@@ -64,12 +101,40 @@ const styles = StyleSheet.create({
   projectTitle: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 8,
     color: '#444',
   },
   projectDescription: {
     fontSize: 14,
     color: '#666',
+    marginTop: 4,
+  },
+  linkSection: {
+    marginTop: 30,
+    alignItems: 'center',
+  },
+  linkText: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 8,
+  },
+  link: {
+    fontSize: 16,
+    color: '#007AFF',
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    marginTop: 20,
+    borderRadius: 8,
+    marginBottom: 30,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#ddd',
+    marginVertical: 20,
   },
 });
 
