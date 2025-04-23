@@ -7,13 +7,8 @@ const MeusProjetosScreen = () => {
     {
       id: '1',
       title: 'Portfólio Pessoal',
-      description: 'Nessa área vamos ter o caminho para acessar os meus antigos projetos, como o Agrinho, Um projeto de um sistema de academia, entre outros',
-    },
-    {
-      id: '2',
-      title: 'App de Tarefas',
-      description: 'Aplicativo para gerenciamento diário.',
-    },
+      description: 'Nessa área vamos ter o caminho para acessar os meus antigos projetos no github, como o Agrinho, um projeto de um sistema de academia, entre outros. E teremos também o meu perfil do linkedin.',
+    }
   ];
 
   return (

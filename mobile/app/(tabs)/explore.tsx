@@ -55,7 +55,7 @@ export default function TabTwoScreen() {
       headerBackgroundColor={{ light: '#abb8c2', dark: '#353636' }}
       headerImage={
         <Image
-          source={require('@/assets/images/simbolo azul-Photoroom.png')}
+          source={require('@/assets/images/chatgpticon.webp')}
           style={styles.headerImage}
         />
       }>
@@ -105,9 +105,9 @@ export default function TabTwoScreen() {
 
 const styles = StyleSheet.create({
   headerImage: {
-    height: 350,
+    height: 245,
     width: 550,
-    bottom: -50,
+    bottom: 2,
     left: -105,
     position: 'absolute',
     resizeMode: 'contain',
