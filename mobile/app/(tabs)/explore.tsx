@@ -1,4 +1,4 @@
-import { StyleSheet, Image, TextInput, View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, Image, TextInput, View, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -25,7 +25,7 @@ export default function TabTwoScreen() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer SUA_CHAVE_API' // 👈 Substitua pela sua chave!
+          'Authorization': 'Bearer SUA_CHAVE_API' // Substituir minha chave
         },
         body: JSON.stringify({
           model: 'gpt-3.5-turbo',
@@ -51,38 +51,42 @@ export default function TabTwoScreen() {
   };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#abb8c2', dark: '#353636' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/chatgpticon.webp')}
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Chatbot</ThemedText>
-      </ThemedView>
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ParallaxScrollView
+        headerBackgroundColor={{ light: '#abb8c2', dark: '#353636' }}
+        headerImage={
+          <Image
+            source={require('@/assets/images/chatgpticon.webp')}
+            style={styles.headerImage}
+          />
+        }>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Chatbot</ThemedText>
+        </ThemedView>
 
-      {/* Área de Mensagens */}
-      <ScrollView style={styles.messagesContainer}>
-        {messages.map((msg, index) => (
-          <ThemedView 
-            key={index} 
-            style={[
-              styles.messageBubble, 
-              msg.user === 'you' ? styles.userBubble : styles.botBubble
-            ]}
-          >
-            <ThemedText style={styles.messageText}>{msg.text}</ThemedText>
-          </ThemedView>
-        ))}
-      </ScrollView>
+        <ScrollView 
+          style={styles.messagesContainer}
+          contentContainerStyle={styles.messagesContentContainer}
+          keyboardShouldPersistTaps="handled"
+        >
+          {messages.map((msg, index) => (
+            <ThemedView 
+              key={index} 
+              style={[
+                styles.messageBubble, 
+                msg.user === 'you' ? styles.userBubble : styles.botBubble
+              ]}
+            >
+              <ThemedText style={styles.messageText}>{msg.text}</ThemedText>
+            </ThemedView>
+          ))}
+        </ScrollView>
+      </ParallaxScrollView>
 
-      {/* Input de Mensagem */}
-      <KeyboardAvoidingView 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.inputContainer}
-      >
+      <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           placeholder="Digite sua mensagem..."
@@ -95,11 +99,12 @@ export default function TabTwoScreen() {
           onPress={handleSendMessage}
           loading={isLoading}
           disabled={isLoading}
+          style={styles.sendButton}
         >
           Enviar
         </Button>
-      </KeyboardAvoidingView>
-    </ParallaxScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -120,8 +125,10 @@ const styles = StyleSheet.create({
   messagesContainer: {
     flex: 1,
     marginBottom: 10,
-    maxHeight: 400,
-  },  
+  },
+  messagesContentContainer: {
+    paddingBottom: 100,
+  },
   messageBubble: {
     padding: 12,
     borderRadius: 8,
@@ -146,6 +153,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#ddd',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
   },
   input: {
     flex: 1,
@@ -155,4 +167,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginRight: 8,
   },
-}); 
+  sendButton: {
+    marginLeft: 8,
+  },
+});
