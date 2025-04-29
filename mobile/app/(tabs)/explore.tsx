@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { StyleSheet, Image, TextInput, View, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+=======
+import { StyleSheet, Image, TextInput, View, ScrollView, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+>>>>>>> b0e0ac3dfa24a83853c3377ead079bf43346090d
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -27,7 +31,11 @@ export default function TabTwoScreen() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+<<<<<<< HEAD
           'Authorization': 'Bearer SUA_CHAVE_API' // minha chave api, ADICIONAR DEPOIS
+=======
+          'Authorization': 'Bearer SUA_CHAVE_API' // Substituir minha chave
+>>>>>>> b0e0ac3dfa24a83853c3377ead079bf43346090d
         },
         body: JSON.stringify({
           model: 'gpt-3.5-turbo',
@@ -72,6 +80,7 @@ export default function TabTwoScreen() {
   };
 
   return (
+<<<<<<< HEAD
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#abb8c2', dark: '#353636' }}
       headerImage={
@@ -108,6 +117,44 @@ export default function TabTwoScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.inputContainer}
       >
+=======
+    <KeyboardAvoidingView 
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ParallaxScrollView
+        headerBackgroundColor={{ light: '#abb8c2', dark: '#353636' }}
+        headerImage={
+          <Image
+            source={require('@/assets/images/chatgpticon.webp')}
+            style={styles.headerImage}
+          />
+        }>
+        <ThemedView style={styles.titleContainer}>
+          <ThemedText type="title">Chatbot</ThemedText>
+        </ThemedView>
+
+        <ScrollView 
+          style={styles.messagesContainer}
+          contentContainerStyle={styles.messagesContentContainer}
+          keyboardShouldPersistTaps="handled"
+        >
+          {messages.map((msg, index) => (
+            <ThemedView 
+              key={index} 
+              style={[
+                styles.messageBubble, 
+                msg.user === 'you' ? styles.userBubble : styles.botBubble
+              ]}
+            >
+              <ThemedText style={styles.messageText}>{msg.text}</ThemedText>
+            </ThemedView>
+          ))}
+        </ScrollView>
+      </ParallaxScrollView>
+
+      <View style={styles.inputContainer}>
+>>>>>>> b0e0ac3dfa24a83853c3377ead079bf43346090d
         <TextInput
           style={styles.input}
           placeholder="Digite sua mensagem..."
@@ -125,8 +172,8 @@ export default function TabTwoScreen() {
         >
           Enviar
         </Button>
-      </KeyboardAvoidingView>
-    </ParallaxScrollView>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -147,6 +194,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 10,
   },
+<<<<<<< HEAD
+=======
+  messagesContentContainer: {
+    paddingBottom: 100,
+  },
+>>>>>>> b0e0ac3dfa24a83853c3377ead079bf43346090d
   messageBubble: {
     padding: 12,
     borderRadius: 18,
@@ -171,6 +224,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 12,
     backgroundColor: '#fff',
+<<<<<<< HEAD
+=======
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+>>>>>>> b0e0ac3dfa24a83853c3377ead079bf43346090d
   },
   input: {
     flex: 1,
@@ -181,6 +244,12 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   sendButton: {
+<<<<<<< HEAD
     borderRadius: 24,
   },
 });
+=======
+    marginLeft: 8,
+  },
+});
+>>>>>>> b0e0ac3dfa24a83853c3377ead079bf43346090d
