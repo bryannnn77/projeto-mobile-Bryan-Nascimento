@@ -1,25 +1,23 @@
-import { StyleSheet, Image, TextInput, View, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { StyleSheet, Image, TextInput, View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Button } from 'react-native-paper';
-import React from 'react';
 
 export default function TabTwoScreen() {
   const [messages, setMessages] = useState([
-    { text: 'Olá! Sou seu assistente virtual. Como posso te ajudar hoje?', user: 'bot' }
+    { text: 'Olá! Sou seu assistente. Como posso ajudar?', user: 'bot' }
   ]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const scrollViewRef = useRef<ScrollView>(null);
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
 
     setIsLoading(true);
     const userMessage = { text: inputText, user: 'you' };
-    setMessages(prev => [...prev, userMessage]);
+    setMessages([...messages, userMessage]);
     setInputText('');
 
     try {
@@ -27,45 +25,26 @@ export default function TabTwoScreen() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer SUA_CHAVE_API' // minha chave api, ADICIONAR DEPOIS
+          'Authorization': 'Bearer SUA_CHAVE_API' // 👈 Substitua pela sua chave!
         },
         body: JSON.stringify({
           model: 'gpt-3.5-turbo',
           messages: [
-            {
-              role: 'system',
-              content: 'Você é um assistente útil que responde em português brasileiro de forma clara e concisa.'
-            },
+            { role: 'system', content: 'Você é um assistente prestativo.' },
             { role: 'user', content: inputText }
           ],
-          temperature: 0.7,
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error?.message || 'Erro na API');
-      }
-
       const data = await response.json();
-      const botMessage = {
-        text: data.choices[0]?.message?.content || 'Não entendi sua pergunta...',
-        user: 'bot'
+      const botMessage = { 
+        text: data.choices[0]?.message?.content || 'Não entendi...', 
+        user: 'bot' 
       };
       setMessages(prev => [...prev, botMessage]);
-
     } catch (error) {
-      console.error('Erro na API:', error);
-      const fallbackResponses = [
-        "Estou com dificuldades técnicas no momento.",
-        "Podemos tentar novamente mais tarde?",
-        "No momento não consigo responder adequadamente."
-      ];
-
-      setMessages(prev => [...prev, {
-        text: fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)],
-        user: 'bot'
-      }]);
+      console.error('Erro ao chamar OpenAI:', error);
+      setMessages(prev => [...prev, { text: 'Erro ao conectar com o chatbot.', user: 'bot' }]);
     } finally {
       setIsLoading(false);
     }
@@ -81,30 +60,26 @@ export default function TabTwoScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Assistente Virtual</ThemedText>
+        <ThemedText type="title">Chatbot</ThemedText>
       </ThemedView>
 
-      <ScrollView
-        style={styles.messagesContainer}
-        ref={scrollViewRef}
-        onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
-      >
+      {/* Área de Mensagens */}
+      <ScrollView style={styles.messagesContainer}>
         {messages.map((msg, index) => (
-          <ThemedView
-            key={index}
+          <ThemedView 
+            key={index} 
             style={[
-              styles.messageBubble,
+              styles.messageBubble, 
               msg.user === 'you' ? styles.userBubble : styles.botBubble
             ]}
           >
-            <ThemedText style={msg.user === 'you' ? styles.userText : styles.botText}>
-              {msg.text}
-            </ThemedText>
+            <ThemedText style={styles.messageText}>{msg.text}</ThemedText>
           </ThemedView>
         ))}
       </ScrollView>
 
-      <KeyboardAvoidingView
+      {/* Input de Mensagem */}
+      <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.inputContainer}
       >
@@ -114,14 +89,12 @@ export default function TabTwoScreen() {
           value={inputText}
           onChangeText={setInputText}
           onSubmitEditing={handleSendMessage}
-          editable={!isLoading}
         />
-        <Button
-          mode="contained"
+        <Button 
+          mode="contained" 
           onPress={handleSendMessage}
           loading={isLoading}
           disabled={isLoading}
-          style={styles.sendButton}
         >
           Enviar
         </Button>
@@ -140,47 +113,46 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   titleContainer: {
+    flexDirection: 'row',
+    gap: 8,
     marginBottom: 20,
-    paddingTop: 10,
   },
   messagesContainer: {
     flex: 1,
     marginBottom: 10,
-  },
+    maxHeight: 400,
+  },  
   messageBubble: {
     padding: 12,
-    borderRadius: 18,
-    marginVertical: 6,
+    borderRadius: 8,
+    marginVertical: 4,
     maxWidth: '80%',
   },
   userBubble: {
     alignSelf: 'flex-end',
-    backgroundColor: '#007AFF',
+    backgroundColor: '#DCF8C6',
   },
   botBubble: {
     alignSelf: 'flex-start',
-    backgroundColor: '#F1F1F1',
+    backgroundColor: '#ECECEC',
   },
-  userText: {
-    color: 'white',
-  },
-  botText: {
-    color: 'black',
+  messageText: {
+    fontSize: 16,
   },
   inputContainer: {
     flexDirection: 'row',
-    padding: 12,
+    alignItems: 'center',
+    padding: 8,
     backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
   },
   input: {
     flex: 1,
     borderWidth: 1,
     borderColor: '#ddd',
-    borderRadius: 24,
-    paddingHorizontal: 16,
+    borderRadius: 20,
+    padding: 10,
     marginRight: 8,
   },
-  sendButton: {
-    borderRadius: 24,
-  },
-});
+}); 
